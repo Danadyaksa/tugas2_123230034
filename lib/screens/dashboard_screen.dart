@@ -61,6 +61,33 @@ class DashboardScreen extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: Divider(color: Colors.white54, thickness: 1),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            const Text('Pemasukan', style: TextStyle(fontSize: 12)),
+                            Text(
+                              formatCurrency.format(controller.getTotalPemasukan()),
+                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            const Text('Pengeluaran', style: TextStyle(fontSize: 12)),
+                            Text(
+                              formatCurrency.format(controller.getTotalPengeluaran()),
+                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               );

@@ -32,4 +32,13 @@ class TransactionController {
     }
     return total;
   }
+
+  double getTotalPemasukan() {
+    final box = Hive.box<Transaction>('transactions');
+    double total = 0;
+    for (var tx in box.values) {
+      if (tx.type == 'Pemasukan') total += tx.amount;
+    }
+    return total;
+  }
 }
