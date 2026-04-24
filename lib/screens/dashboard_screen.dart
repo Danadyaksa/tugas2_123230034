@@ -19,7 +19,7 @@ class DashboardScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Kartu Total Saldo dengan Warna Pastel
+          // Kartu Total Saldo dengan Warna Solid Pastel
           ValueListenableBuilder(
             valueListenable: controller.transactions,
             builder: (context, box, _) {
@@ -27,62 +27,75 @@ class DashboardScreen extends StatelessWidget {
                 margin: const EdgeInsets.all(16),
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFA7C7E7), Color(0xFFC3B1E1)], // Pastel Blue ke Pastel Purple
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+                  color: Colors.white, // Kartunya dibikin PUTIH BERSIH
                   borderRadius: BorderRadius.circular(20),
+                  // Tapi kita kasih garis pinggir (border) warna pastel!
+                  border: Border.all(color: const Color(0xFFC3B1E1), width: 2), 
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 5),
+                      // Shadownya kita kasih warna pastel ungu transparan biar seger
+                      color: const Color(0xFFC3B1E1).withOpacity(0.3), 
+                      blurRadius: 15,
+                      spreadRadius: 2,
+                      offset: const Offset(0, 8),
                     )
                   ],
                 ),
                 width: double.infinity,
                 child: Column(
                   children: [
-                    Text(
-                      'Total Saldo',
-                      style: TextStyle(
-                        color: Colors.blueGrey[900],
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFA7C7E7).withOpacity(0.3), // Highlight biru pastel
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: Text(
+                        'Total Saldo',
+                        style: TextStyle(
+                          color: Colors.blueGrey[700],
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     Text(
                       formatCurrency.format(controller.getTotalSaldo()),
                       style: TextStyle(
                         color: Colors.blueGrey[900],
-                        fontSize: 32,
-                        fontWeight: FontWeight.w800,
+                        fontSize: 36, // Digedein dikit biar tegas
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -0.5,
                       ),
                     ),
+                    
                     const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Divider(color: Colors.white54, thickness: 1),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Divider(color: Colors.black12, thickness: 1),
                     ),
+                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           children: [
-                            const Text('Pemasukan', style: TextStyle(fontSize: 12)),
+                            const Text('Pemasukan', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                            const SizedBox(height: 4),
                             Text(
                               formatCurrency.format(controller.getTotalPemasukan()),
-                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.green),
+                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.green, fontSize: 16),
                             ),
                           ],
                         ),
+                        Container(height: 30, width: 1, color: Colors.black12), // Garis pemisah tengah
                         Column(
                           children: [
-                            const Text('Pengeluaran', style: TextStyle(fontSize: 12)),
+                            const Text('Pengeluaran', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                            const SizedBox(height: 4),
                             Text(
                               formatCurrency.format(controller.getTotalPengeluaran()),
-                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent),
+                              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.redAccent, fontSize: 16),
                             ),
                           ],
                         ),
@@ -122,7 +135,6 @@ class DashboardScreen extends StatelessWidget {
                 return ListView.builder(
                   itemCount: box.length,
                   itemBuilder: (context, index) {
-                    // Mengambil data dari yang terbaru (reverse index)
                     final Transaction tx = box.getAt(box.length - 1 - index)!;
                     
                     return Card(
